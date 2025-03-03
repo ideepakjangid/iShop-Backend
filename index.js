@@ -14,13 +14,12 @@ const TransactionRoutes = require('./routers/transaction.routes')
 const app = express();
 app.use(express.static("public"));
 
-app.use(cors({origin:"*"}));
+app.use(cors({origin:process.env.CLIENT_URL}));
 app.use(express.json());
 
 
 
 const PORT = 5000;
-const DATA_BASE_URL ="mongodb://localhost:27017/";
 
 
 app.use('/accessory',AccessoryRoutes)
@@ -38,7 +37,7 @@ app.use('/transaction',TransactionRoutes)
 
 try {
     mongoose.connect(
-        DATA_BASE_URL,
+        process.env.MOONGO_URI,
         {dbName:"ecommerce"}
     ).then(
         (success)=>{
